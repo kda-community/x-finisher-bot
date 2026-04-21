@@ -1,0 +1,21 @@
+[project]
+name = "x-finisher-bot"
+version = "0.1.0"
+description = "Kadena X-Chain finisher bot"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "aiolimiter>=1.2.1",
+    "kadena-block-relayer-lib",
+    "pypact",
+]
+
+[tool.uv]
+package=true
+
+[tool.uv.sources]
+kadena-block-relayer-lib = { git = "https://github.com/CryptoPascal31/kadena_block_relayer.git", subdirectory = "kadena_block_relayer_lib" }
+pypact = { git = "https://github.com/CryptoPascal31/pyPact" }
+
+[project.scripts]
+x-finisher-bot = "main:main"
