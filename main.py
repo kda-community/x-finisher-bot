@@ -184,9 +184,13 @@ class XFinisherBot:
                 async with self.block_throttler:
                     yield x
 
+        logger.info("Scanning chain {:2d} ===> {:d} -> {:d}".format(int(chain), _hash.height - blocks_count, _hash.height - 1))
+
         async for c in self.to_continuations(self.blocks_to_results(_payloads())):
             if c.pactId not in self.defpact_status:
                 asyncio.create_task(self.handle_continuation_task(c))
+
+        logger.info("Scanning chain {:2d} ended".format(int(chain)))
 
     def do_all_chains_backward(self, blocks_count):
         for chain in map(str, range(0,20)):
@@ -200,7 +204,7 @@ class XFinisherBot:
 
     async def periodic_backard_task(self):
         while True:
-            logger.info("Starting periodic backward")
+            logger.info("Starting periodic backward task")
             self.do_all_chains_backward(240)
             await asyncio.sleep(3600)
 
